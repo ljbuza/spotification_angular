@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Spotify Artist Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <style>
+    dd a, dd a:hover, dd a:visited {
+      color: #BA4A00;
+    }
+    dd {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body ng-app="ArtistSearch">
+  <div class="container-fluid" ng-controller="SearchController">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-1">
+        <h2>Spotify Artist Search <small>Spotification</small></h2>
+        <form name="spotifySearch" class="form-inline" novalidate>
+          <div class="form-group" ng-class="{'has-error': spotifySearch.search.$touched && spotifySearch.search.$invalid}">
+            <label for="search">Search by Artist
+            <input type="text" ng-model="artist" name="search" class="form-control" placeholder="search..." required>
+            </label>
+            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="spotifySearch.$invalid" ng-click="search()">Go!</button>
+            <div class="help-block" ng-messages="spotifySearch.search.$error" ng-if="spotifySearch.search.$touched && spotifySearch.$invalid">
+              <div ng-messages="required">You did not enter an artist to search for.</div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-1" style="margin-top:20px;">
+        <dl class="dl-horizontal" ng-repeat="artist in artistData | orderBy:'name'">
+          <dt><img ng-src="{{artist.images[1].url}}" class="img-thumbnail" alt="artist image" /></dt>
+          <dd><span ng-bind="artist.name"></span><br/>
+            <a ng-href="{{artist.external_urls.spotify}}">Artist Page</a>
+          </dd>
+        </dl>
+        <em ng-if="artistData.length == 0">No Artists Found.</em>
+        <strong class="text-danger" ng-bind="error" ng-if="error"></strong>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-messages.min.js"></script>
+<script type="text/javascript" src="artists.js"></script>
+
+</html>
