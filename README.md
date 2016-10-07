@@ -1,4 +1,4 @@
-*Spotification Angular
+#Spotification Angular
 
 
 A Spotify Artist search app written in php and Angular.
